@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to EARTH store where you can buy different items......
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }} - Earth Store
+    {% else %}
+        See our New Collections - Earth Store
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if category %}
+
+    <div>
+        <div class="row my_row_class">
+            <div class="mx-auto">
+            <p><a href="{% url 'shop:allProdCat' %}">Our Product Collection</a></p>
+        <div>
+            </div>
+    </div>
+    {% endif %}
+<div class="mx-auto">
+    {% if category %}
+    <img class="" src="{{category.image.url}}" alt="{{category.name}}" width="1300px" height="400px">
+</div>
+    <br>
+<div>
+    <h1 class="text-center my_title">{{category.name}}</h1>
+    <p class="text-justify">{{category.description}}</p>
+</div>
+    {% else %}
+<div>
+<img class="" src="{% static 'img/banner.png' %}" alt="our products" width="1350px;">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title"> Our Products Collection</h1>
+    <p class="text-justify">“Rrow itself, let it be sorrow; let him love it; let him pursue it, ishing for its acquisitiendum. Because he will ab hold, uniess but through concer, and also of those who resist. Now a pure snore disturbeded sum dust. He ejjnoyes, in order that somewon, also with a severe one, unless of life. May a cusstums offficer somewon nothing of a poison-filled. Until, from a twho, twho chaffinch may also pursue it, not even a lump. But as twho, as a tank; a proverb, yeast; or else they tinscribe nor. Yet yet dewlap bed. Twho may be, let him love fellows of a polecat. Now amour, the, twhose being, drunk, yet twhitch and, an enclosed valley’s always a laugh. In acquisitiendum the Furies are Earth; in (he takes up) a lump vehicles bien.”</p>
+</div>
+    {% endif %}
+<div class="container">
+    <div class="row m_auto">
+        {% for product in products.object_list %}
+        <div class="my_botton_margin col-9 col-sm-12 col-md-4 xol-lg-4">
+            <div class="card text-center" style="min-width:18rem;">
+                <a href="{{product.get_url}}">
+                    <img class="card-img-top my_image" src="{{product.image.url}}" alt="{{product.name}}" width="1300px" height="400px">
+
+                </a>
+                <div class="card-body">
+                    <h4>{{product.name}}</h4>
+                    <p>{{product.price}}</p>
+
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+                <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
